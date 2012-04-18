@@ -21,9 +21,11 @@ $myusername = mysql_real_escape_string($myusername);
 $mypassword = mysql_real_escape_string($mypassword);
 
 // encrypt password 
-$encrypted_mypassword=md5($mypassword);
+$myusername = strtoupper($myusername);
+$mypassword = strtoupper($mypassword);
+$encrypted_mypassword=SHA1($myusername.':'.$mypassword);
 
-$sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' AND ac.gmlevel > 1 AND a.id=ac.id;";
+$sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' and sha_pass_hash = '$encrypted_mypassword' AND a.id=ac.id";
 
 $result=mysql_query($sql);
 
