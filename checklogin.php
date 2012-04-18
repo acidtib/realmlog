@@ -1,14 +1,10 @@
 <?php
 ob_start();
-$host="localhost"; // Host name 
-$username="root"; // Mysql username 
-$password="kurubit825"; // Mysql password 
-$db_name="realmlog"; // Database name 
-$tbl_name="account"; // Table name
+require_once("../GlobalConfiguration.php");
 
 // Connect to server and select databse.
-mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
-mysql_select_db("$db_name")or die("cannot select DB");
+mysql_connect("$gdbhost", "$gdbuser", "$gdbpass")or die("cannot connect"); 
+mysql_select_db("$gdblog")or die("cannot select DB");
 
 // Define $myusername and $mypassword 
 $myusername=$_POST['myusername']; 
@@ -19,12 +15,13 @@ $myusername = stripslashes($myusername);
 $mypassword = stripslashes($mypassword);
 $myusername = mysql_real_escape_string($myusername);
 $mypassword = mysql_real_escape_string($mypassword);
+$myusername = strtoupper($myusername);
+$mypassword = strtoupper($mypassword);
 
 // encrypt password 
-$encrypted_mypassword=md5($mypassword);
+$encrypted_mypassword=SHA1($myusername.':'.$mypassword);
 
-$sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' AND ac.gmlevel > 1 AND a.id=ac.id;";
-
+$sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' and sha_pass_hash = '$encrypted_mypassword' AND a.id=ac.id";
 $result=mysql_query($sql);
 
 // Mysql_num_row is counting table row
