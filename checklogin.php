@@ -23,7 +23,8 @@ $mypassword = mysql_real_escape_string($mypassword);
 // encrypt password 
 $encrypted_mypassword=md5($mypassword);
 
-$sql="SELECT * FROM $tbl_name WHERE username='$myusername' and password='$encrypted_mypassword'";
+$sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' AND ac.gmlevel > 1 AND a.id=ac.id;";
+
 $result=mysql_query($sql);
 
 // Mysql_num_row is counting table row
