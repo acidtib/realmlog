@@ -15,7 +15,9 @@ header("location:index.php");
 
 
 	<div>
-		<?php include 'C:\trinity\logs\anticheat\Warden.log'; ?>
+		<textarea style="width: 722px; height: 600px;" rows="2" cols="20">
+			<?php include 'C:\trinity\logs\anticheat\Warden.log'; ?>
+		</textarea>
 	</div>
 	
 	
