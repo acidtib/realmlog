@@ -19,7 +19,15 @@ $myusername = strtoupper($myusername);
 $mypassword = strtoupper($mypassword);
 
 // encrypt password 
+<<<<<<< HEAD
 $encrypted_mypassword=SHA1($myusername.':'.$mypassword);
+=======
+$myusername = strtoupper($myusername);
+$mypassword = strtoupper($mypassword);
+$encrypted_mypassword=SHA1($myusername.':'.$mypassword);
+
+$sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' and sha_pass_hash = '$encrypted_mypassword' AND a.id=ac.id";
+>>>>>>> 411f966f6915c343f29a504e67dd393e9480c30c
 
 $sql="SELECT a.id, a.username, a.sha_pass_hash, ac.gmlevel FROM account a, account_access ac WHERE a.username = '$myusername' and sha_pass_hash = '$encrypted_mypassword' AND a.id=ac.id";
 $result=mysql_query($sql);
